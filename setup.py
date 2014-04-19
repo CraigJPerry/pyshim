@@ -4,9 +4,9 @@
 
 """PyShim, an experiment in LD_PRELOAD shimming with Python."""
 
+from distutils.extension import Extension
 
 from setuptools import setup, find_packages
-from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 
@@ -24,7 +24,7 @@ setup(
     author_email="craigp84@gmail.com",
     install_requires=REQUIREMENTS,
     packages=find_packages(exclude=["tests"]),
-    cmdclass = {'build_ext': build_ext},
-    ext_modules = [Extension("pyshim.libc", ["pyshim/libc.pyx"])]
+    cmdclass={'build_ext': build_ext},
+    ext_modules=[Extension("pyshim.libc", ["pyshim/libc.pyx"])]
 )
 
