@@ -25,6 +25,6 @@ setup(
     install_requires=REQUIREMENTS,
     packages=find_packages(exclude=["tests"]),
     cmdclass={'build_ext': build_ext},
-    ext_modules=[Extension("pyshim.libc", ["pyshim/libc.pyx"])]
+    ext_modules=[Extension("pyshim.pyshim", ["pyshim/pyshim.pyx"])]
 )
 
