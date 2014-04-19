@@ -1,4 +1,6 @@
 *.pyc
 *.so
 .idea
+*.egg-info
+build
 
