@@ -18,5 +18,5 @@ To rebuild the .so i run::
 
 To use the .so to intercept library calls i run::
 
-    [user@host ~]$ LD_PRELOAD=pyshim/pyshim.so dd if=/dev/zero of=/dev/null count=1
+    [user@host ~]$ LD_PRELOAD=pyshim/pyshim.so env echo
 
