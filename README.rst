@@ -18,5 +18,12 @@ To rebuild the .so i run::
 
 To use the .so to intercept library calls i run::
 
-    [user@host ~]$ LD_PRELOAD=pyshim/pyshim.so env echo
+    [user@host ~]$ env LD_PRELOAD=pyshim/pyshim.so env echo Hi
+    Refusing execvp
+    env: echo: No such file or directory
+
+    [user@host ~]$ env PERMIT=1 LD_PRELOAD=pyshim/pyshim.so env echo Hi
+    Looking up real execvp
+    Found real execvp, now delegating
+    Hi
 
