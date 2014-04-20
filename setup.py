@@ -4,10 +4,10 @@
 
 """PyShim, an experiment in LD_PRELOAD shimming with Python."""
 
-from distutils.extension import Extension
 
 from setuptools import setup, find_packages
 from Cython.Distutils import build_ext
+from distutils.extension import Extension
 
 
 __version__ = "0.1.1"
