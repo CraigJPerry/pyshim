@@ -10,15 +10,24 @@ from os.path import join, dirname, pardir, abspath
 
 
 SHIM = abspath(join(dirname(__file__), pardir, "pyshim", "pyshim.so"))
-CMDLINE = ["/usr/bin/env", "LD_PRELOAD=" + SHIM, "/usr/bin/env", "echo"]
 
 
 class WriterInterception(unittest.TestCase):
     """An end to end test."""
 
-    def test_intercepts_call_and_produces_intercepted_output(self):
+    def test_permits_passthru(self):
+        CMDLINE = ["/usr/bin/env", "PERMIT=1", "LD_PRELOAD=" + SHIM, "/usr/bin/env", "echo", "testing..."]
         output = subprocess.check_output(CMDLINE, stderr=subprocess.STDOUT)
-        self.assertIn("Intercepted lookup of", output)
+        self.assertIn("testing...", output)
+
+    def test_prevents_passthru(self):
+        CMDLINE = ["/usr/bin/env", "LD_PRELOAD=" + SHIM, "/usr/bin/env", "echo", "testing..."]
+        try:
+            output = subprocess.check_output(CMDLINE, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError:
+            pass
+        else:
+            self.fail("Unexpectedly permitted passthrough")
 
 
 if __name__ == "__main__":
