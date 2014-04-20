@@ -6,18 +6,19 @@
 
 import unittest
 import subprocess
-
 from os.path import join, dirname, pardir, abspath
+
+
+SHIM = abspath(join(dirname(__file__), pardir, "pyshim", "pyshim.so"))
+CMDLINE = ["/usr/bin/env", "LD_PRELOAD=" + SHIM, "/usr/bin/env", "echo"]
 
 
 class WriterInterception(unittest.TestCase):
     """An end to end test."""
 
-    def test_echos_write_output_to_stderr(self):
-        shim = abspath(join(dirname(__file__), pardir, "pyshim", "pyshim.so"))
-        cmdline = ["/usr/bin/env", "LD_PRELOAD=", shim, "python", "-V"]
-        output = subprocess.check_output(cmdline, stderr=subprocess.STDOUT)
-        self.assertIn("dont know yet", output)
+    def test_intercepts_call_and_produces_intercepted_output(self):
+        output = subprocess.check_output(CMDLINE, stderr=subprocess.STDOUT)
+        self.assertIn("Intercepted lookup of", output)
 
 
 if __name__ == "__main__":
