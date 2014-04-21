@@ -14,16 +14,18 @@ Install dependencies then install this python package in "editable" mode::
 
 To rebuild the .so i run::
 
-    [user@host ~]$ python setup.py build_ext --inplace
+    (pyshim)[user@host ~]$ python setup.py build_ext --inplace
 
 To use the .so to intercept library calls i run::
 
-    [user@host ~]$ env LD_PRELOAD=pyshim/pyshim.so env echo Hi
+    (pyshim)[user@host ~]$ env LD_PRELOAD=pyshim/pyshim.so env echo Hi
     Refusing execvp
-    env: echo: No such file or directory
 
-    [user@host ~]$ env PERMIT=1 LD_PRELOAD=pyshim/pyshim.so env echo Hi
+    (pyshim)[user@host ~]$ env PERMIT=1 LD_PRELOAD=pyshim/pyshim.so env echo Hi
     Looking up real execvp
     Found real execvp, now delegating
     Hi
+
+With thanks to nneonneo on Stack Overflow:
+http://stackoverflow.com/questions/23177316/cython-gil-sigsegv
 

@@ -22,12 +22,7 @@ class WriterInterception(unittest.TestCase):
 
     def test_prevents_passthru(self):
         CMDLINE = ["/usr/bin/env", "LD_PRELOAD=" + SHIM, "/usr/bin/env", "echo", "testing..."]
-        try:
-            output = subprocess.check_output(CMDLINE, stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError:
-            pass
-        else:
-            self.fail("Unexpectedly permitted passthrough")
+        self.assertRaises(subprocess.CalledProcessError, subprocess.check_output, CMDLINE, stderr=subprocess.STDOUT)
 
 
 if __name__ == "__main__":
